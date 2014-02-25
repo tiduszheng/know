@@ -6,6 +6,7 @@ var Schema = connection.Schema;
 var db = connection.connectoin;
 
 var questionSchemaDict = {
+    _id: {type:Number, required:true},
     time: Schema.Types.Mixed,
     hide: Boolean,
     title: {type:String, required:true},
@@ -14,10 +15,11 @@ var questionSchemaDict = {
     username: {type:String, required:true}
 };
 
-var QuestionSchema = new Schema(questionSchemaDict);
+var QuestionSchema = new Schema(questionSchemaDict, {_id:false});
 var QuestionModel = db.model('Question', QuestionSchema);
 
 function Question(question){
+    this._id = question._id;
     this.time = question.time;
     this.hide = question.hide;
     this.title = question.title;
@@ -25,6 +27,17 @@ function Question(question){
     this.answer = question.answer;
     this.username = question.username;
 };
+
+Question.getLastID = function(cb){
+    var lastid = 0;
+    QuestionModel.findOne({}).sort('-time').exec(function(err, que){
+        if(que)
+        {
+            lastid = que._id;
+        }
+        cb(lastid);
+    });
+}
 
 
 exports.QuestionModel = QuestionModel;

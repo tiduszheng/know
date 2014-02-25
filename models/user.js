@@ -5,6 +5,7 @@ var connection = require('./db');
 var Schema = connection.Schema;
 var db = connection.connectoin;
 var QuestionModel = require('./question').QuestionModel;
+var Question = require('./question').Question;
 
 //UserSchema dictionary
 var userSchemaDict = {
@@ -33,7 +34,6 @@ function User(user){
     this.imgUrl = user.imgUrl;
 };
 
-module.exports = User;
 
 //dao
 User.prototype.save = function(cb){
@@ -81,18 +81,24 @@ User.ask = function(ask, cb){
     }
     question.time=time;
 
-    var questionEntity = new QuestionModel(question);
-    questionEntity.save(function(err, doc){
+    //获取最新的id
+    Question.getLastID(function(lastid){
+        console.log('lastid:'+lastid);
+        question._id = ++lastid;
 
-        if(doc)
-        {
-            cb(err, doc);
-        }
-        else
-        {
-            console.log(err);
-            cb(err, null);
-        }
+        var questionEntity = new QuestionModel(question);
+        questionEntity.save(function(err, doc){
+
+            if(doc)
+            {
+                cb(err, doc);
+            }
+            else
+            {
+                console.log(err);
+                cb(err, null);
+            }
+        });
     });
 };
 
@@ -132,21 +138,51 @@ User.login = function(name, password, cb){
 
 
 User.getQuestions = function(cb){
-    QuestionModel.find({hide:false}).limit(5).sort('-time').exec(function(err, data){
+    User.getQuestionPage(0,function(data){
+        cb(data);
+    });
+    /*QuestionModel.find({hide:false}).limit(5).sort('-time').exec(function(err, data){
         //在user表中查询imgurl
         var max = data.length;
         if(max > 0)
         {
-            console.log(max);
+
             var total = 0;
             for(var i = 0; i < max;i++){
-                console.log(data[i].username);
+
                 UserModel.findOne({name:data[i].username}, function(err, item){
                     data[total]['imgUrl'] = item.imgUrl;
                     total++;
                     if(total == max)
                     {
-                        console.log('total==max');
+                        cb(data);
+                    }
+                });
+            }
+        }
+        else
+        {
+            return cb(data);
+        }
+    });*/
+};
+
+User.getQuestionPage = function(page, cb){
+    //打开数据库
+    var num = page * 5;
+    QuestionModel.find({hide:false}).skip(num).limit(5).sort('-time').exec(function(err, data){
+        //在user表中查询imgurl
+        var max = data.length;
+
+        if(max > 0)
+        {
+            var total = 0;
+            for(var i = 0; i < max;i++){
+                UserModel.findOne({name:data[i].username}, function(err, item){
+                    data[total]['imgUrl'] = item.imgUrl;
+                    total++;
+                    if(total == max)
+                    {
                         cb(data);
                     }
                 });
@@ -157,4 +193,23 @@ User.getQuestions = function(cb){
             return cb(data);
         }
     });
+
 };
+
+
+User.findQuestion = function(id, cb){
+    QuestionModel.find({_id:Number(id)}).exec(function(err, items){
+        cb(err, items);
+    });
+};
+
+User.answer = function(qid, answer, cb){
+    //update question's answer
+    QuestionModel.update({_id:qid},{$push:{answer:answer}}, function(err, items){
+        if(err)
+        {console.log(err);}
+        cb(err, items);
+    });
+};
+
+module.exports = User;

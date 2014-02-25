@@ -57,21 +57,30 @@
     </div>
 </div>
 <script>
-    var pageNum=1;
+    var pageNum =1;
     $("#getMore").on("click",function(){
         $.get("/getQuestion", { page: pageNum } ,function(info){
-            for(var i=0,l=info.length;i<l;i++){
-                info[i].url="/people/"+info[i].name;
+
+            if(info.length > 0)
+            {
+                for(var i=0,l=info.length;i<l;i++){
+                    info[i].url="/people/"+info[i].name;
+                }
+                pageNum++;
+                var element = $('#element'),
+                        tpl = $('#tpl').html();
+                var render = _.template(tpl);
+                var data = {};
+                data.list=info;
+                var html = render(data);
+                // 将解析后的内容填充到渲染元素
+                element.append(html);
             }
-            pageNum++;
-            var element = $('#element'),
-                    tpl = $('#tpl').html();
-            var render = _.template(tpl);
-            var data = {};
-            data.list=info;
-            var html = render(data);
-            // 将解析后的内容填充到渲染元素
-            element.append(html);
+            else
+            {
+                //没有更多数据了
+                $('#getMore').hide();
+            }
         });
     });
 </script>
