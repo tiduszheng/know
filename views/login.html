@@ -1,49 +1,87 @@
 <%- include header.html %>
+<body class="login">
 <div class="container">
-    <div class="row hero-unit">
-        <div class="span4">
+    <div class="row-fluid">
+        <div class="col-md-3 col-md-offset-3">
             <h1>知道</h1>
             <p>知识共享平台</p>
         </div>
-        <div class="span3 offset3">
+        <div class="col-md-3">
             <form id="login" action="/login" method="post">
                 <fieldset>
                     <div class="row-fluid">
-                        <div class="span3">登陆</div>
-                        <div class="span5 offset4" id="changeReg" style="cursor:pointer">切换注册</div>
+                        <div class="col-md-6">登陆</div>
+                        <div class="col-md-6" id="changeReg" style="cursor:pointer">切换注册</div>
                     </div>
-                    <input type="text" placeholder="用户名" name="name">
-                    <input type="password" name="password" placeholder="密码">
-                    <button type="submit" class="btn">登陆</button>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <input type="text" placeholder="用户名" name="name">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn">登陆</button>
+                        </div>
+                    </div>
 
                 </fieldset>
             </form>
             <form id="reg" action="/reg" method="post">
                 <fieldset>
                     <div class="row-fluid">
-                        <div class="span3">注册</div>
-                        <div class="span5 offset4" id="changeLog" style="cursor:pointer">切换登陆</div>
+                        <div class="col-md-6">注册</div>
+                        <div class="col-md-6" id="changeLog" style="cursor:pointer">切换登陆</div>
                     </div>
-                    <input type="text" placeholder="用户名" name="name">
-                    <input type="password" name="password" placeholder="密码">
-                    <input type="password" name="repassword" placeholder="确定密码">
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <input type="text" placeholder="用户名" name="name">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <input type="password" name="repassword" placeholder="确定密码">
+                        </div>
+                    </div>
+
                     <% if (locals.error) { %>
-                    <div><%= locals.error %> </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <%= locals.error %>
+                        </div>
+                    </div>
                     <% } %>
                     <% if(locals.success) {%>
-                    <div><%= locals.success %> </div>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <%= locals.success %>
+                        </div>
+                    </div>
                     <% } %>
-                    <button type="submit" class="btn">注册</button>
+                    <div class="row-fluid">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn">注册</button>
+                        </div>
+                    </div>
+
                 </fieldset>
             </form>
         </div>
     </div>
-    <hr>
-    <footer>
-    </footer>
+
+
 </div>
 <script>
-    $("#login").hide();
+    $("#reg").hide();
     $("#changeReg").on("click",function(){
         $("#login").hide();
         $("#reg").show();

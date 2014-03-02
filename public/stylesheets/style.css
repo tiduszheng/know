@@ -1,9 +1,10 @@
-/*
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body.toolbar {
+    padding-top: 70px;
 }
+body.login {
+    padding-top:100px;
+}
+footer {
+    text-align: center;
 
-a {
-  color: #00B7FF;
-}*/
+}

@@ -2,7 +2,7 @@
 /*
  * GET home page.
  */
-var User = require('../models/user.js'); //引入用户登录函数
+var model = require('../models');
 var login = require('./login');
 var reg = require('./register');
 var home = require('./home');
@@ -14,22 +14,24 @@ var error = require('./error');
 var answer = require('./answer');
 var crawler = require('./pagecrawler');
 
+
 module.exports = function(app){
+
     //login && loginout
     //http://localhost:3000/login 发送登陆信息接受地址
     //http://localhost:3000/loginout  登出请求地址
-    login(app);
+    login(app, model);
 
     //reg
     //http://localhost:3000/reg 发送注册信息接受地址
-    reg(app);
+    reg(app, model);
 
     //http://localhost:3000/show  网站登陆后内容展示页
-    home(app);
+    home(app, model);
 
     //ajax异步的get请求获取地址http://localhost:3000/getQuestion
     //http://localhost:3000/question/1 具体问题展示页
-    question(app);
+    question(app, model);
 
     //http://localhost:3000/people/tang  tang这个用户的展示页面
     //发生编辑和修改个人信息的请求地址http://localhost:3000/people
@@ -39,10 +41,10 @@ module.exports = function(app){
     error(app);
 
     //ajax异步提问发生问题地址http://localhost:3000/ask
-    ask(app);
+    ask(app, model);
 
     //ajax异步回答问题地址http://localhost:3000/answer
-    answer(app);
+    answer(app, model);
 
     //百度百科爬虫获取地址
     crawler(app);

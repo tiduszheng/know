@@ -1,13 +1,14 @@
 /**
  * Created by bolo on 14-2-24.
  */
+var crypto = require('crypto'); //密码加密模块
 
-var User = require('../models/user.js'); //引入用户登录函数
+module.exports = function(app, model){
 
-module.exports = function(app){
     //发送注册信息接受地址http://localhost:3000/reg
     app.post('/reg',function(req,res){
         //post信息中发送过来的name,password和repassword,用req.body获取
+        console.log('start reg');
         var name = req.body.name,
             password = req.body.password,
             password_re = req.body['repassword'];
@@ -22,13 +23,13 @@ module.exports = function(app){
         //对密码进行加密操作
         var md5 = crypto.createHash('md5'),
             password = md5.update(req.body.password).digest('hex');
-        var newUser = new User({
+        var newUser = new model.User({
             name: req.body.name,
             password: password
         });
 
         //使用user.js中的user.get() 函数来读取用户信息
-        User.get(newUser.name, function(err, user){
+        model.User.get(newUser.name, function(err, user){
             //如果有返回值，表示存在用户
             if(user){
                 err = '用户已存在!';
@@ -50,7 +51,7 @@ module.exports = function(app){
                 //成功后，将用户信息记录在页面间的会话req.session中，并且跳转到一个新页面，就是内容集中展示页面
                 req.session.user = user;
                 req.flash('success','注册成功!');
-                res.redirect('/show');
+                res.redirect('/home');
             });
         });
     });

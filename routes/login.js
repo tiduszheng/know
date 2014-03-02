@@ -3,9 +3,9 @@
  */
 
 var crypto = require('crypto'); //密码加密模块
-var User = require('../models/user.js'); //引入用户登录函数
 
-module.exports = function(app){
+
+module.exports = function(app, model){
 
     app.get('/login', function(req, res){
         res.render('login');
@@ -17,7 +17,7 @@ module.exports = function(app){
         var md5 = crypto.createHash('md5');
         var password = md5.update(req.body.password).digest('hex');
 
-        var user = User.login(username, password, function(err, user){
+        var user = model.User.login(username, password, function(err, user){
             if(user)
             {
                 req.session.user = user;

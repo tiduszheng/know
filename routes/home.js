@@ -1,9 +1,8 @@
 /**
  * Created by bolo on 14-2-24.
  */
-var User = require('../models/user.js'); //引入用户登录函数
 
-module.exports = function(app){
+module.exports = function(app, model){
 
     app.get('/', function(req, res){
         res.redirect('/home');
@@ -11,7 +10,7 @@ module.exports = function(app){
 
     //http://localhost:3000/show  网站登陆后内容展示页
     app.get('/home',function(req,res){
-        User.getQuestions(function(data){  //使用User.getQuestion()获取问题
+        model.User.getQuestions(function(data){  //使用User.getQuestion()获取问题
             console.log('data.length:'+data.length);
             if(data.length==0){//数据库没有内容
                 res.render('home',{
