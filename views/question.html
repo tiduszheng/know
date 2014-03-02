@@ -3,12 +3,14 @@
     <div class="row-fluid">
         <div class="span7">
             <div>
-                <h1><%= items.title %></h1>
+                <h2><%= items.title %></h2>
                 <p><%= items.content %></p>
+                <hr />
             </div>
             <ul>
                 <% items.answer.forEach(function(q, index){ %>
                 <li>
+                    <hr />
                     <h4><%= items.username %></h4>
                     <p><%= q.answer %></p>
                 </li>
@@ -21,10 +23,6 @@
             </form>
         </div>
         <div class="span4">
-            <h2>我的信息</h2>
-            <h2>我的信息</h2>
-            <h2>我的信息</h2>
-            <h2>我的信息</h2>
             <h2>我的信息</h2>
         </div>
     </div>

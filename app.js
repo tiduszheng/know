@@ -10,6 +10,7 @@ var path = require('path');
 var ejs = require('ejs');
 var setting = require('./setting');
 var flash = require('connect-flash');
+var interceptor = require('./interceptor');
 
 var app = express();
 
@@ -36,23 +37,32 @@ app.use(express.session({
     }),
     cookie:{maxAge:setting.cookieMaxAge}
 }));
-app.use(function(req, res, next){
-    res.locals.user = req.session.user;
-    next();
-});
+
+//放在session后面，拦截器前面
+app.use(express.static(path.join(__dirname, 'public')));
+
+//拦截器，处理session等
+interceptor(app);
 //------------------------------------------------
 
+//路由配置------------------------------------------------------
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+routes(app);
+//------------------------------------------------------------
+
+
+//异常处理-------------------------------------------------------------------------
+app.use(function(err, req, res, next){
+    console.error(err.stack);
+    res.send(500, 'Sorry, It seems that the server has gone for his girlfriend...' +
+        'wait for a sec and try again please, ok? he will be back soon. ');
+});
+//-----------------------------------------------------------------------------------
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-//路由配置------------------------------------------------------
-routes(app);
-//------------------------------------------------------------
 
 
 http.createServer(app).listen(app.get('port'), function(){

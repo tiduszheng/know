@@ -6,6 +6,11 @@ var crypto = require('crypto'); //密码加密模块
 var User = require('../models/user.js'); //引入用户登录函数
 
 module.exports = function(app){
+
+    app.get('/login', function(req, res){
+        res.render('login');
+    });
+
     //发送登陆信息接受地址http://localhost:3000/login
     app.post('/login',function(req,res){
         var username = req.body.name;
@@ -16,12 +21,12 @@ module.exports = function(app){
             if(user)
             {
                 req.session.user = user;
-                res.redirect('/show');
+                res.redirect('/home');
             }
             else
             {
                 req.flash('error', '用户名密码不匹配');
-                res.redirect('/');
+                res.redirect('/login');
             }
         });
     });
