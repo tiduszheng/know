@@ -22,7 +22,7 @@ module.exports = function(app, model){
     app.get('/question/:id',function(req,res){
         model.User.findQuestion(req.params.id, function(err, items){
 
-            res.render('question',{
+            res.render('question/question',{
                 items:items[0],
                 user:req.session.user,
                 id:req.params.id

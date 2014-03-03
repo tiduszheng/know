@@ -23,7 +23,7 @@ module.exports = function(app, model){
                 data[i].url="/people/"+data[i].name;
                 data[i].imgUrl=data[i].imgUrl.replace("./public/","");
             }
-            res.render('home',{
+            res.render('home/home',{
                 lists:data,
                 user:req.session.user
             });

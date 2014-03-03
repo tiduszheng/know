@@ -8,7 +8,7 @@ var crypto = require('crypto'); //密码加密模块
 module.exports = function(app, model){
 
     app.get('/login', function(req, res){
-        res.render('login');
+        res.render('login/login');
     });
 
     //发送登陆信息接受地址http://localhost:3000/login

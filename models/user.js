@@ -105,8 +105,8 @@ User.ask = function(ask, cb){
 
 
 User.get = function(name, cb){
-    UserModel.findOne({'name':name},'some select', function(err, user){
-        if(user)
+    UserModel.findOne({'name':name}, function(err, user){
+        if(user.name)
         {
             console.log('find '+user.name+' no error');
             var foundUser = new User(user);
@@ -141,30 +141,6 @@ User.getQuestions = function(cb){
     User.getQuestionPage(0,function(data){
         cb(data);
     });
-    /*QuestionModel.find({hide:false}).limit(5).sort('-time').exec(function(err, data){
-        //在user表中查询imgurl
-        var max = data.length;
-        if(max > 0)
-        {
-
-            var total = 0;
-            for(var i = 0; i < max;i++){
-
-                UserModel.findOne({name:data[i].username}, function(err, item){
-                    data[total]['imgUrl'] = item.imgUrl;
-                    total++;
-                    if(total == max)
-                    {
-                        cb(data);
-                    }
-                });
-            }
-        }
-        else
-        {
-            return cb(data);
-        }
-    });*/
 };
 
 User.getQuestionPage = function(page, cb){

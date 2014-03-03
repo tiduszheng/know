@@ -35,7 +35,7 @@ module.exports = function(app){
 
     //http://localhost:3000/people/tang  tang这个用户的展示页面
     //发生编辑和修改个人信息的请求地址http://localhost:3000/people
-    people(app);
+    people(app, model);
 
     //http://localhost:3000/error 404和错误页面展示地址
     error(app);

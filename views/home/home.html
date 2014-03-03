@@ -1,24 +1,28 @@
-<%- include navbar.html %>
+<%- include ../shared/navbar.html %>
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-md-offset-1">
             <ul class="thumbnails" id="element">
                 <% lists.forEach(function(list, index){ %>
                 <li>
-                    <div class="span2">
-                        <div class="row" style="margin-top:20px;">
-                            <div class="span8 offset2">
-                                <a href='<%= list.url %>'><img src="<%= list.imgUrl %>"></a>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <a href='<%= list.url %>'><img src="<%= list.imgUrl %>"></a>
+                                </div>
                             </div>
-                            <div class="span8 offset2">
-                                <%= list.name %>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <%= list.name %>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="span9">
-                        <h3><a href="/question/<%= list._id %>"><%= list.title %></a></h3>
-                        <p><%= list.content %></p>
-                        <p><span><%= list.time.minute %></span><span>学习</span></p>
+                        <div class="col-md-10">
+                            <h3><a href="/question/<%= list._id %>"><%= list.title %></a></h3>
+                            <p><%= list.content %></p>
+                            <p><span><%= list.time.minute %></span></p>
+                        </div>
                     </div>
                 </li>
                 <% }) %>
@@ -84,4 +88,4 @@
         });
     });
 </script>
-<%- include footer.html %>
+<%- include ../shared/footer.html %>
