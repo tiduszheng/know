@@ -13,7 +13,7 @@ module.exports = function(app, model){
         model.User.getQuestions(function(data){  //使用User.getQuestion()获取问题
             console.log('data.length:'+data.length);
             if(data.length==0){//数据库没有内容
-                res.render('home',{
+                res.render('home/home',{
                     lists:data,
                     user:req.session.user
                 });

@@ -22,7 +22,7 @@ var userSchemaDict = {
 var UserSchema = new Schema(userSchemaDict);
 var UserModel = db.model('User', UserSchema);
 
-//User calss
+//User class
 function User(user){
     this.name = user.name;
     this.password = user.password;
