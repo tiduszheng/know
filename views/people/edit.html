@@ -1,0 +1,71 @@
+<%- include ../shared/navbar.html %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/people/<%= user.name%>" ><%= user.name%></a>编辑个人资料
+                </div>
+            </div>
+            <form method="post" action="/people" enctype="multipart/form-data" >
+            <fieldset>
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>头像</h3>
+                </div>
+                <div class="col-md-2">
+                    <img id="oriheadimg" src="<%=user.imgUrl%>" />
+                </div>
+                <div class="col-md-7">
+                    <input type="file" name="headimg" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>地址</h3>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="address" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>学校</h3>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="school" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>公司</h3>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="company" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>备注</h3>
+                </div>
+                <div class="col-md-9">
+                    <p><input type="text" name="info" /></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="reset" value="放弃修改" />
+                </div>
+                <div class="col-md-9">
+                    <button class="button" type="submit" >保存</button>
+                </div>
+            </div>
+            </fieldset>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <h4>something else</h4>
+        </div>
+    </div>
+</div>
+<%- include ../shared/footer.html %>

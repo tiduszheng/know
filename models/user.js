@@ -106,7 +106,7 @@ User.ask = function(ask, cb){
 
 User.get = function(name, cb){
     UserModel.findOne({'name':name}, function(err, user){
-        if(user.name)
+        if(user && user.name != null)
         {
             console.log('find '+user.name+' no error');
             var foundUser = new User(user);
